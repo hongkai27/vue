@@ -5,7 +5,10 @@ const state = {
   isLogin: false
 }
 
-const getters = {}
+const getters = {//页面虽然有多个模块，但会把所有模块的getters直接拿到，所以h关键数据放在getters里面方便取
+  user:(state)=>{state.user},
+  isLogin:(state)=>{state.isLogin}
+}
 
 const mutations = {
   setUser(state, payload) {
@@ -34,7 +37,7 @@ const actions = {
           commit('setUser',{user:null})
           commit('setLogin',{isLogin:false})
       },
-      async checklogin({commit,state}){
+      async checklogin({commit,state}){//async方法范蝴蝶是一个promise对象
           if(state.isLogin) return true
           let res = await auth.getinfo()
           commit('setLogin',{isLogin:res.isLogin})
