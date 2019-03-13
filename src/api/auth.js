@@ -9,10 +9,10 @@ const URL = {
 
 export default {
     register({username,password}){
-        return request(URL.REGISTER,'post',{username,password})
+        return request(URL.REGISTER,'POST',{username,password})
     },
     login({username,password}){
-        return request(URL.LOGIN,'post',{username,password})
+        return request(URL.LOGIN,'POST',{username,password})
     },
     logout(){
         return request(URL.LOGOUT)
