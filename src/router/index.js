@@ -1,61 +1,106 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import login from '@/pages/login/template.vue'
-import index from '@/pages/index/template.vue'
-import detail from '@/pages/detail/template.vue'
-import create from '@/pages/create/template.vue'
-import edit from '@/pages/edit/template.vue'
-import my from '@/pages/my/template.vue'
-import register from '@/pages/register/template.vue'
-import user from '@/pages/user/template.vue'
+/*
+import Index from '@/pages/Index/template.vue'
+import Login from '@/pages/Login/template.vue'
+import Detail from '@/pages/Detail/template.vue'
+import Edit from '@/pages/Edit/template.vue'
+import Create from '@/pages/Create/template.vue'
+import Register from '@/pages/Register/template.vue'
+import User from '@/pages/User/template.vue'
+import My from '@/pages/My/template.vue'
+*/
 
 import store from '../store'
 window.store = store
 
 Vue.use(Router)
 
+/*
 const router = new Router({
   routes: [
     {
       path: '/',
-      component: index
+      component: Index
     },
     {
       path: '/login',
-      component: login
-    },
-    {
-      path: '/detail/:blogId',
-      component: detail
-    },
-    {
-      path: '/create',
-      component: create,
-      meta:{requiresAuth:true}
-    },
-    {
-      path: '/edit/:blogId',
-      component: edit,
-      meta:{requiresAuth:true}
-    },
-    {
-      path: '/my',
-      component: my,
-      meta:{requiresAuth:true}
+      component: Login
     },
     {
       path: '/register',
-      component: register
+      component: Register
+    },
+    {
+      path: '/detail/:blogId',
+      component: Detail
+    },
+    {
+      path: '/edit/:blogId',
+      component: Edit,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/create',
+      component: Create,
+      meta: { requiresAuth: true }
     },
     {
       path: '/user/:userId',
-      component: user
+      component: User
+    },
+    {
+      path: '/my',
+      component: My,
+      meta: { requiresAuth: true }
     }
   ]
 })
-router.beforeEach((to, from, next) => {//router就是上面创建的一个新对象,beforeEach每一次路由切换，都会执行函数
+*/
+
+const router =  new Router({
+  routes: [
+    {
+      path: '/',
+      component: () => import('@/pages/index/template.vue')
+    },
+    {
+      path: '/login',
+      component: () => import('@/pages/login/template.vue')
+    },
+    {
+      path: '/detail/:blogId',
+      component: () => import('@/pages/detail/template.vue')
+    },
+    {
+      path: '/edit/:blogId',
+      component: () => import('@/pages/edit/template.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/create',
+      component: () => import('@/pages/create/template.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/user/:userId',
+      component: () => import('@/pages/user/template.vue')
+    },
+    {
+      path: '/my',
+      component: () => import('@/pages/my/template.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/register',
+      component: () => import('@/pages/register/template.vue')
+    }
+  ]
+})
+
+router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    store.dispatch('checklogin').then(isLogin=>{
+    store.dispatch('checkLogin').then(isLogin=>{
       if (!isLogin) {
         next({
           path: '/login',
@@ -71,3 +116,4 @@ router.beforeEach((to, from, next) => {//router就是上面创建的一个新对
 })
 
 export default router
+
