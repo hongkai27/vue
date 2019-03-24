@@ -63,6 +63,7 @@ const router =  new Router({
     {
       path: '/',
       component: () => import('@/pages/index/template.vue')
+      //component:resolve =>require(['@/pages/index/template.vue'],resolve)
     },
     {
       path: '/login',
